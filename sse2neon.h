@@ -814,6 +814,22 @@ FORCE_INLINE __m128i _mm_or_si128(__m128i a, __m128i b)
         vorrq_s32(vreinterpretq_s32_m128i(a), vreinterpretq_s32_m128i(b)));
 }
 
+// https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_mm_sub_ss
+FORCE_INLINE __m128 _mm_sub_ss(__m128 a, __m128 b)
+{
+    return _mm_move_ss(a, _mm_sub_ps(a, b));
+}
+
+// Subtract 2 packed 64-bit integers in b from 2 packed 64-bit integers in a,
+// and store the results in dst.
+//    r0 := a0 - b0
+//    r1 := a1 - b1
+FORCE_INLINE __m128i _mm_sub_epi64(__m128i a, __m128i b)
+{
+    return vreinterpretq_m128i_s64(
+        vsubq_s64(vreinterpretq_s64_m128i(a), vreinterpretq_s64_m128i(b)));
+}
+
 // Computes the bitwise XOR of the 128-bit value in a and the 128-bit value in
 // b.  https://msdn.microsoft.com/en-us/library/fzt08www(v=vs.100).aspx
 FORCE_INLINE __m128i _mm_xor_si128(__m128i a, __m128i b)
